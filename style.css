@@ -1,18 +1,18 @@
 body{
     display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    background-color: #192325;
     flex-direction: column;
-    margin: 0
+    align-items: center;
+    background-color: #192325;
+    margin: 0;
+    padding: 0;
 }
 
 header {
     display: flex;
     justify-content: space-between;
     background-color: red;
-    width: 1650px;
-    align-self: center;
+    width: 100%;
+    max-width: 1650px;
     font-size: 13px;
     align-items: center;
     height: 60px;
@@ -20,22 +20,24 @@ header {
 
 .container{
     display: flex;
-    align-self: center;
+    justify-content: center;
     border-radius: 30px;
     background-color: #f2f2f2;
     height: 750px;
+    width: 100%;
     width: 1650px;
     margin-top: 30px;
 }
 
 footer {
-    margin-top: 5px;
+    
     display: flex;
-    align-self: center;
-    height: 80px;
-    align-content: center;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    max-width: 1650px;
+    height: 80px;
+    margin-top: 5px;
 }
 
 img{
