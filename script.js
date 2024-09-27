@@ -21,19 +21,39 @@ function addTask(){
 
     const task = document.createElement("li");
     const span = document.createElement("span");
-    const deleteButton = document.createElement("button");
+    const spanButtons = document.createElement("span");
+    const doneButton = document.createElement('img');
+    const deleteButton = document.createElement("img");
 
+    spanButtons.appendChild(doneButton);
+    spanButtons.appendChild(deleteButton);
+
+    spanButtons.classList.add("listImgs");
+    
     task.appendChild(span);
+    task.appendChild(spanButtons);
     span.textContent = taskValue;
 
-    task.appendChild(deleteButton);
-    deleteButton.textContent = "Delete";
+    
+
+    doneButton.classList.add("checkImg");
+    doneButton.src= "images/check.png";
+
+    deleteButton.classList.add("deleteImg");
+    deleteButton.src = "images/delete.png";
+    
+
+
 
     span.classList.add("task");
     lista.appendChild(task);
 
 
     deleteButton.addEventListener("click", () => {
+        lista.removeChild(task);
+    });
+
+    doneButton.addEventListener('click', () => {
         lista.removeChild(task);
     });
 
