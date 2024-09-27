@@ -29,6 +29,7 @@ function addTask(){
     task.appendChild(deleteButton);
     deleteButton.textContent = "Delete";
 
+    span.classList.add("task");
     lista.appendChild(task);
 
 
