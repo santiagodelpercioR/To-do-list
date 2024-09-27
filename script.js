@@ -6,6 +6,8 @@ const contenedor = document.querySelector(".container");
 const seccionCarpetas = document.querySelector(".carpetas");
 const lista = document.createElement("ul");
 
+input.focus();
+
 seccionCarpetas.appendChild(lista);
 
 let cantFolders = 0;
@@ -13,11 +15,20 @@ let cantFolders = 0;
 addTaskButton.addEventListener("click", addTask);
 //addFolderButton.addEventListener("click", addFolder);
 
+function isEnter(e){
+    if(event.key === 'Enter'){
+        addTask();
+    }
+}
+
 function addTask(){
     let taskValue = input.value;
-    console.log(taskValue);
-
-    input.value = '';
+    
+    if(taskValue === ''){
+        
+    }
+    else{
+        input.value = '';
 
     const task = document.createElement("li");
     const span = document.createElement("span");
@@ -34,16 +45,11 @@ function addTask(){
     task.appendChild(spanButtons);
     span.textContent = taskValue;
 
-    
-
     doneButton.classList.add("checkImg");
     doneButton.src= "images/check.png";
 
     deleteButton.classList.add("deleteImg");
     deleteButton.src = "images/delete.png";
-    
-
-
 
     span.classList.add("task");
     lista.appendChild(task);
@@ -54,9 +60,9 @@ function addTask(){
     });
 
     doneButton.addEventListener('click', () => {
-        lista.removeChild(task);
+        span.classList.toggle("tachado");
     });
-
+    }
     input.focus();
     
 }

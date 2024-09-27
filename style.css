@@ -26,6 +26,7 @@ body,html{
 /* Body */
 
 body{
+    font-family: 'Merriweather',sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -34,6 +35,7 @@ body{
 
 /* Header */
 header {
+    font-family: 'Merriweather',sans-serif;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -65,6 +67,7 @@ header h2 {
 
 /* Container */
 .container {
+    font-size: small;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -164,6 +167,10 @@ h1 {
     cursor: pointer;
 }
 
+.tachado {
+    text-decoration: line-through;  
+    
+}
 /* Footer */
 footer {
     display: flex;
