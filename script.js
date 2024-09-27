@@ -2,11 +2,11 @@
 const addTaskButton = document.querySelector("#botonAgregar");
 const addFolderButton = document.querySelector("#botonAgregarCarpeta");
 const input = document.querySelector("#inputTarea");
-const lista = document.querySelector("ul");
 const contenedor = document.querySelector(".container");
 const seccionCarpetas = document.querySelector(".carpetas");
+const lista = document.createElement("ul");
 
-let noFolders = true;
+let cantFolders = 0;
 
 addTaskButton.addEventListener("click", addTask);
 addFolderButton.addEventListener("click", addFolder);
@@ -17,25 +17,29 @@ function addTask(){
 
     input.value = '';
 
-    const task = document.createElement("li");
-    const span = document.createElement("span");
-    const deleteButton = document.createElement("button");
+    if(cantFolders < 1){
+        alert("no hay carpetas");
+    }
+    else {
+        const task = document.createElement("li");
+        const span = document.createElement("span");
+        const deleteButton = document.createElement("button");
 
-    task.appendChild(span);
-    span.textContent = taskValue;
+        task.appendChild(span);
+        span.textContent = taskValue;
 
-    task.appendChild(deleteButton);
-    deleteButton.textContent = "Delete";
+        task.appendChild(deleteButton);
+        deleteButton.textContent = "Delete";
 
-    lista.appendChild(task);
-
-
-    deleteButton.addEventListener("click", () => {
-        lista.removeChild(task);
-    });
+        lista.appendChild(task);
 
 
+        deleteButton.addEventListener("click", () => {
+            lista.removeChild(task);
+        });
+    }
     input.focus();
+    
 }
 
 function addFolder(){
@@ -43,21 +47,35 @@ function addFolder(){
     
     input.value = '';
 
-    const folderDiv = document.createElement("div");
-    const folderTitle = document.createElement("h3");
-    const deleteButton = document.createElement("button");
+    if(cantFolders < 1 ){
+        const folderDiv = document.createElement("div");
+        const folderTitle = document.createElement("h3");
+        const deleteButton = document.createElement("button");
+        const span = document.createElement("span");
+        
+        folderTitle.textContent = folderName;
+        span.appendChild(folderTitle);
 
-    folderTitle.textContent = folderName;
+        deleteButton.textContent = "Delete";
+        span.appendChild(deleteButton);
 
-    folderDiv.appendChild(deleteButton);
-    deleteButton.textContent = "Delete";
+        folderDiv.classList.add("carpeta");
+        folderDiv.appendChild(span);
 
-    folderDiv.appendChild(folderTitle);
-    folderDiv.classList.add("carpeta");
+        span.classList.add("folderTitle");
 
-    seccionCarpetas.appendChild(folderDiv);
+        folderDiv.appendChild(lista);
 
-    deleteButton.addEventListener("click", () => {
-        contenedor.removeChild(folderDiv);
-    });
+        seccionCarpetas.appendChild(folderDiv);
+
+        deleteButton.addEventListener("click", () => {
+            seccionCarpetas.removeChild(folderDiv);
+            cantFolders--;
+        });
+
+        cantFolders++;
+    }
+    else{
+        alert("ya hay una carpeta");
+    }
 }
