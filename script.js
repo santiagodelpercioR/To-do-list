@@ -31,10 +31,12 @@ function addTask(){
         input.value = '';
 
     const task = document.createElement("li");
+    const primerTask = document.querySelector("li");
     const span = document.createElement("span");
     const spanButtons = document.createElement("span");
     const doneButton = document.createElement('img');
     const deleteButton = document.createElement("img");
+
 
     spanButtons.appendChild(doneButton);
     spanButtons.appendChild(deleteButton);
@@ -52,8 +54,14 @@ function addTask(){
     deleteButton.src = "images/delete.png";
 
     span.classList.add("task");
-    lista.appendChild(task);
 
+    if(primerTask === null){
+        lista.appendChild(task);
+    }
+    else{
+        lista.insertBefore(task,primerTask);
+    }
+    
 
     deleteButton.addEventListener("click", () => {
         lista.removeChild(task);
