@@ -12,11 +12,11 @@ let cantFolders = 0;
 
 addTaskButton.addEventListener("click", addTask);
 
-function isEnter(e){
-    if(event.key === 'Enter'){
+input.addEventListener("keydown", (event) => {
+    if(event.code === "Enter"){
         addTask();
     }
-}
+})
 
 function addTask(){
     let taskValue = input.value;
