@@ -1,62 +1,55 @@
-function addTask(valor){
+function addTask(valor = null){
 
-    let taskValue = valor;
-    if(valor == null){
-        taskValue = input.value;
-    }
-    
+    let taskValue = valor !== null ? valor: input.value.trim();
+
     if(taskValue === ''){
-        
+        return;    
+    }
+    input.value = '';
+
+    const task = document.createElement("li");
+    const primerTask = document.querySelector("li");
+    const span = document.createElement("span");
+    const spanButtons = document.createElement("span");
+    const doneButton = document.createElement('img');
+    const deleteButton = document.createElement("img");
+
+
+    spanButtons.appendChild(doneButton);
+    spanButtons.appendChild(deleteButton);
+
+    spanButtons.classList.add("listImgs");
+    
+    task.appendChild(span);
+    task.appendChild(spanButtons);
+    span.textContent = taskValue;
+
+    doneButton.classList.add("checkImg");
+    doneButton.src= "images/check.png";
+
+    deleteButton.classList.add("deleteImg");
+    deleteButton.src = "images/delete.png";
+
+    span.classList.add("task");
+
+    if(primerTask === null){
+        lista.appendChild(task);
     }
     else{
-        input.value = '';
-
-        const task = document.createElement("li");
-        const primerTask = document.querySelector("li");
-        const span = document.createElement("span");
-        const spanButtons = document.createElement("span");
-        const doneButton = document.createElement('img');
-        const deleteButton = document.createElement("img");
-
-
-        spanButtons.appendChild(doneButton);
-        spanButtons.appendChild(deleteButton);
-
-        spanButtons.classList.add("listImgs");
-        
-        task.appendChild(span);
-        task.appendChild(spanButtons);
-        span.textContent = taskValue;
-
-        doneButton.classList.add("checkImg");
-        doneButton.src= "images/check.png";
-
-        deleteButton.classList.add("deleteImg");
-        deleteButton.src = "images/delete.png";
-
-        span.classList.add("task");
-
-        if(primerTask === null){
-            lista.appendChild(task);
-        }
-        else{
-            lista.insertBefore(task,primerTask);
-        }
-        
-
-        deleteButton.addEventListener("click", () => {
-            lista.removeChild(task);
-        });
-
-        doneButton.addEventListener('click', () => {
-            span.classList.toggle("tachado");
-        });
-
-        //Agrego la tarea al local storage
-        saveOnLocalStorage(taskValue);
-        }
-    input.focus();
+        lista.insertBefore(task,primerTask);
+    }
     
+    deleteButton.addEventListener("click", () => {
+        lista.removeChild(task);
+    });
+
+    doneButton.addEventListener('click', () => {
+        span.classList.toggle("tachado");
+    });
+
+    //Agrego la tarea al local storage
+    saveOnLocalStorage(taskValue);
+    input.focus();
 }
 
 const addTaskButton = document.querySelector("#botonAgregar");
@@ -70,27 +63,22 @@ input.focus();
 
 seccionCarpetas.appendChild(lista);
 
-let cantFolders = 0;
-
-addTaskButton.addEventListener("click", addTask);
+addTaskButton.addEventListener("click", () => addTask());
 
 input.addEventListener("keydown", (event) => {
     if(event.code === "Enter"){
         addTask();
     }
-})
+});
 
 getFromLocalStorage();
 
 function getFromLocalStorage(){
 
     if(localStorage.getItem("savedTasks")){ // se que existe el array de tareas en el localStorage
-        
         const tareas = JSON.parse(localStorage.getItem("savedTasks"));
-
-        tareas.forEach((element) =>    
-            addTask(element)
-        );
+        console.log(tareas);
+        tareas.forEach((element) => addTask(element));
     }
     else {
         console.log("no hay entradas en el local storage");
@@ -99,7 +87,6 @@ function getFromLocalStorage(){
 }
 
 function saveOnLocalStorage(task){
-
     tasks.push(task); // Agrego la tarea al array de tareas
     localStorage.setItem("savedTasks", JSON.stringify(tasks));
 }
