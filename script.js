@@ -41,6 +41,7 @@ function addTask(valor = null){
     
     deleteButton.addEventListener("click", () => {
         lista.removeChild(task);
+        deleteFromLocalStorage(taskValue);
     });
 
     doneButton.addEventListener('click', () => {
@@ -83,10 +84,16 @@ function getFromLocalStorage(){
     else {
         console.log("no hay entradas en el local storage");
     }
-    
 }
 
 function saveOnLocalStorage(task){
     tasks.push(task); // Agrego la tarea al array de tareas
+    localStorage.setItem("savedTasks", JSON.stringify(tasks));
+}
+
+function deleteFromLocalStorage(task){
+    console.log("tengo q borrar " + task);
+    let position = tasks.indexOf(task);
+    tasks.splice(position, 1);
     localStorage.setItem("savedTasks", JSON.stringify(tasks));
 }
