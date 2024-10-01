@@ -1,8 +1,70 @@
+function addTask(valor){
+
+    let taskValue = valor;
+    if(valor == null){
+        taskValue = input.value;
+    }
+    
+    if(taskValue === ''){
+        
+    }
+    else{
+        input.value = '';
+
+        const task = document.createElement("li");
+        const primerTask = document.querySelector("li");
+        const span = document.createElement("span");
+        const spanButtons = document.createElement("span");
+        const doneButton = document.createElement('img');
+        const deleteButton = document.createElement("img");
+
+
+        spanButtons.appendChild(doneButton);
+        spanButtons.appendChild(deleteButton);
+
+        spanButtons.classList.add("listImgs");
+        
+        task.appendChild(span);
+        task.appendChild(spanButtons);
+        span.textContent = taskValue;
+
+        doneButton.classList.add("checkImg");
+        doneButton.src= "images/check.png";
+
+        deleteButton.classList.add("deleteImg");
+        deleteButton.src = "images/delete.png";
+
+        span.classList.add("task");
+
+        if(primerTask === null){
+            lista.appendChild(task);
+        }
+        else{
+            lista.insertBefore(task,primerTask);
+        }
+        
+
+        deleteButton.addEventListener("click", () => {
+            lista.removeChild(task);
+        });
+
+        doneButton.addEventListener('click', () => {
+            span.classList.toggle("tachado");
+        });
+
+        //Agrego la tarea al local storage
+        saveOnLocalStorage(taskValue);
+        }
+    input.focus();
+    
+}
+
 const addTaskButton = document.querySelector("#botonAgregar");
 const addFolderButton = document.querySelector("#botonAgregarCarpeta");
 const input = document.querySelector("#inputTarea");
 const seccionCarpetas = document.querySelector(".carpetas");
 const lista = document.createElement("ul");
+const tasks = []; // Creo un array de tareas
 
 input.focus();
 
@@ -18,56 +80,26 @@ input.addEventListener("keydown", (event) => {
     }
 })
 
-function addTask(){
-    let taskValue = input.value;
-    
-    if(taskValue === ''){
+getFromLocalStorage();
+
+function getFromLocalStorage(){
+
+    if(localStorage.getItem("savedTasks")){ // se que existe el array de tareas en el localStorage
         
+        const tareas = JSON.parse(localStorage.getItem("savedTasks"));
+
+        tareas.forEach((element) =>    
+            addTask(element)
+        );
     }
-    else{
-        input.value = '';
-
-    const task = document.createElement("li");
-    const primerTask = document.querySelector("li");
-    const span = document.createElement("span");
-    const spanButtons = document.createElement("span");
-    const doneButton = document.createElement('img');
-    const deleteButton = document.createElement("img");
-
-
-    spanButtons.appendChild(doneButton);
-    spanButtons.appendChild(deleteButton);
-
-    spanButtons.classList.add("listImgs");
-    
-    task.appendChild(span);
-    task.appendChild(spanButtons);
-    span.textContent = taskValue;
-
-    doneButton.classList.add("checkImg");
-    doneButton.src= "images/check.png";
-
-    deleteButton.classList.add("deleteImg");
-    deleteButton.src = "images/delete.png";
-
-    span.classList.add("task");
-
-    if(primerTask === null){
-        lista.appendChild(task);
-    }
-    else{
-        lista.insertBefore(task,primerTask);
+    else {
+        console.log("no hay entradas en el local storage");
     }
     
+}
 
-    deleteButton.addEventListener("click", () => {
-        lista.removeChild(task);
-    });
+function saveOnLocalStorage(task){
 
-    doneButton.addEventListener('click', () => {
-        span.classList.toggle("tachado");
-    });
-    }
-    input.focus();
-    
+    tasks.push(task); // Agrego la tarea al array de tareas
+    localStorage.setItem("savedTasks", JSON.stringify(tasks));
 }
